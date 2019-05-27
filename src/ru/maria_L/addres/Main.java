@@ -4,13 +4,11 @@ import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import ru.maria_L.addres.controller.AutorisationController;
+import ru.maria_L.addres.view.AutorisationController;
 import ru.maria_L.addres.model.Place;
 import ru.maria_L.addres.view.RootController;
 
@@ -30,11 +28,6 @@ public class Main extends Application {
         placeData.add(new Place("Russia","Rostov region"));
         placeData.add(new Place("Russia","Dagestan Republic"));
 
-    }
-
-
-    public ObservableList<Place> getPlaceData() {
-        return placeData;
     }
 
     @Override
@@ -61,6 +54,10 @@ public class Main extends Application {
         }
     }
 
+    public ObservableList<Place> getPlaceData() {
+        return placeData;
+    }
+
     public void initRoot() {
         try {
             FXMLLoader loader  = new FXMLLoader();
@@ -77,7 +74,8 @@ public class Main extends Application {
 
             RootController controller = loader.getController();
             controller.setStage(rootStage);
-
+            controller.setMain(this);
+            primaryStage.close();
             rootStage.show();
         } catch (IOException e) {
             e.printStackTrace();
@@ -91,4 +89,6 @@ public class Main extends Application {
     public static void main(String[] args) {
         launch(args);
     }
+
+
 }

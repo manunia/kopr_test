@@ -1,4 +1,4 @@
-package ru.maria_L.addres.controller;
+package ru.maria_L.addres.view;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
