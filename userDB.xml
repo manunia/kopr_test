@@ -1,0 +1,13 @@
+<!--?xml version="1.0" encoding="UTF-8"?-->
+
+<config>
+    <user id="1">
+        <login>usr</login>
+        <password>123</password>
+    </user>
+    <user id="2">
+        <login>usr2</login>
+        <password>123456</password>
+    </user>
+
+</config>

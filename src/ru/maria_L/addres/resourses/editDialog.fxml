@@ -11,12 +11,12 @@
 <?import javafx.scene.layout.RowConstraints?>
 
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.maria_L.addres.view.EditDialogController">
+<AnchorPane prefHeight="400.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.maria_L.addres.view.EditDialogController">
    <children>
       <GridPane layoutX="9.0" layoutY="95.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="5.0">
          <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="280.0" minWidth="10.0" prefWidth="130.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="440.0" minWidth="10.0" prefWidth="440.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="440.0" minWidth="10.0" prefWidth="400.0" />
          </columnConstraints>
          <rowConstraints>
             <RowConstraints maxHeight="43.0" minHeight="10.0" prefHeight="41.0" vgrow="SOMETIMES" />
@@ -33,18 +33,18 @@
             <Label text="Street" GridPane.rowIndex="3" />
             <Label text="House" GridPane.rowIndex="4" />
             <Label text="Description" GridPane.rowIndex="5" />
-            <TextField GridPane.columnIndex="1" />
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="4" />
-            <TextArea prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <TextField fx:id="countryField" GridPane.columnIndex="1" />
+            <TextField fx:id="regionField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="cityField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextField fx:id="streetField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <TextField fx:id="houseField" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <TextArea fx:id="descriptionArea" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
          </children>
       </GridPane>
       <ButtonBar layoutX="9.0" layoutY="329.0" prefHeight="40.0" prefWidth="200.0" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="15.0">
          <buttons>
-            <Button mnemonicParsing="false" text="OK" />
-            <Button mnemonicParsing="false" text="Cancel" />
+            <Button mnemonicParsing="false" text="OK" onMouseClicked="#handleOk"/>
+            <Button mnemonicParsing="false" text="Cancel" onMouseClicked="#handleCancel"/>
          </buttons>
       </ButtonBar>
    </children>

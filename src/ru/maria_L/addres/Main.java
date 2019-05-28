@@ -10,9 +10,12 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import ru.maria_L.addres.view.AutorisationController;
 import ru.maria_L.addres.model.Place;
+import ru.maria_L.addres.view.EditDialogController;
 import ru.maria_L.addres.view.RootController;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.prefs.Preferences;
 
 public class Main extends Application {
 
@@ -79,6 +82,63 @@ public class Main extends Application {
             rootStage.show();
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+    //загрузка окна диалога редактирования данных
+    public boolean showEditDialog(Place place) {
+        try {
+            // Загружаем fxml-файл и создаём новую сцену
+            // для всплывающего диалогового окна.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(Main.class.getResource("resourses/editDialog.fxml"));
+            AnchorPane page = (AnchorPane) loader.load();
+
+            // Создаём диалоговое окно Stage.
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Edit Address");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(primaryStage);
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+
+            // Передаём адрес в контроллер.
+            EditDialogController controller = loader.getController();
+            controller.setEditDialogStage(dialogStage);
+            controller.setPlace(place);
+
+            // Отображаем диалоговое окно и ждём, пока пользователь его не закроет
+            dialogStage.showAndWait();
+
+            return controller.isOkClicked();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    //сохранение текущих настроек приложения
+    public File getPlaceFilePath() {
+        Preferences prefs = Preferences.userNodeForPackage(Main.class);
+        String filePath = prefs.get("filePath", null);
+        if (filePath != null) {
+            return new File(filePath);
+        } else {
+            return null;
+        }
+    }
+
+    //восстановление состояния
+    public void setPlaceFilePath(File file) {
+        Preferences prefs = Preferences.userNodeForPackage(Main.class);
+        if (file != null) {
+            prefs.put("filePath", file.getPath());
+
+            // Обновление заглавия сцены.
+            primaryStage.setTitle("Address List - " + file.getName());
+        } else {
+            prefs.remove("filePath");
+
+            // Обновление заглавия сцены.
+            primaryStage.setTitle("Address List");
         }
     }
 

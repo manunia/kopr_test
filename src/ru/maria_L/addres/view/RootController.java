@@ -87,6 +87,36 @@ public class RootController {
         }
     }
 
+    //обработчик нажатия на кнопку New, вызывает диалог редактирования
+    @FXML
+    private void handleNewPlace() {
+        Place tempPlace = new Place();
+        boolean okClicked = main.showEditDialog(tempPlace);
+        if (okClicked) {
+            main.getPlaceData().add(tempPlace);
+        }
+    }
+    //обработчик нажатия на кнопку Edit
+    @FXML
+    private void handleEditPlace() {
+        Place selectedPlace = placeTable.getSelectionModel().getSelectedItem();
+        if (selectedPlace != null) {
+            boolean okClicked = main.showEditDialog(selectedPlace);
+            if (okClicked) {
+                showPlaceDetails(selectedPlace);
+            }else {
+                // Ничего не выбрано.
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.initOwner(main.getPrimaryStage());
+                alert.setTitle("No Selection");
+                alert.setHeaderText("No Place Selected");
+                alert.setContentText("Please select some place in the table.");
+
+                alert.showAndWait();
+            }
+        }
+    }
+
     public void setMain(Main main) {
         this.main = main;
 
