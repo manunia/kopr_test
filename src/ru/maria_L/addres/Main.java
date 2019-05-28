@@ -5,14 +5,19 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import ru.maria_L.addres.model.PlaceListWrapper;
 import ru.maria_L.addres.view.AutorisationController;
 import ru.maria_L.addres.model.Place;
 import ru.maria_L.addres.view.EditDialogController;
 import ru.maria_L.addres.view.RootController;
 
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.Marshaller;
+import javax.xml.bind.Unmarshaller;
 import java.io.File;
 import java.io.IOException;
 import java.util.prefs.Preferences;
@@ -83,6 +88,10 @@ public class Main extends Application {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        File file = getPlaceFilePath();
+        if (file != null) {
+            loadDataFromFile(file);
+        }
     }
     //загрузка окна диалога редактирования данных
     public boolean showEditDialog(Place place) {
@@ -139,6 +148,58 @@ public class Main extends Application {
 
             // Обновление заглавия сцены.
             primaryStage.setTitle("Address List");
+        }
+    }
+
+    //загрузка днных из xml файла
+    public void loadDataFromFile(File file) {
+        try {
+            JAXBContext context = JAXBContext
+                    .newInstance(PlaceListWrapper.class);
+            Unmarshaller um = context.createUnmarshaller();
+
+            // Чтение XML из файла и демаршализация.
+            PlaceListWrapper wrapper = (PlaceListWrapper) um.unmarshal(file);
+
+            placeData.clear();
+            placeData.addAll(wrapper.getPlaces());
+
+            // Сохраняем путь к файлу в реестре.
+            setPlaceFilePath(file);
+
+        } catch (Exception e) { // catches ANY exception
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Could not load data");
+            alert.setContentText("Could not load data from file:\n" + file.getPath());
+
+            alert.showAndWait();
+        }
+    }
+    //метод сохранения данных в xml файл
+    public void saveDataToFile(File file) {
+        try {
+            JAXBContext context = JAXBContext
+                    .newInstance(PlaceListWrapper.class);
+            Marshaller m = context.createMarshaller();
+            m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+
+            // Обёртываем наши данные об адресатах.
+            PlaceListWrapper wrapper = new PlaceListWrapper();
+            wrapper.setPlaces(placeData);
+
+            // Маршаллируем и сохраняем XML в файл.
+            m.marshal(wrapper, file);
+
+            // Сохраняем путь к файлу в реестре.
+            setPlaceFilePath(file);
+        } catch (Exception e) { // catches ANY exception
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Could not save data");
+            alert.setContentText("Could not save data to file:\n" + file.getPath());
+
+            alert.showAndWait();
         }
     }
 

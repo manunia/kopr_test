@@ -5,9 +5,12 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import ru.maria_L.addres.Main;
 import ru.maria_L.addres.model.Place;
+
+import java.io.File;
 
 public class RootController {
 
@@ -58,7 +61,7 @@ public class RootController {
             cityLabel.setText(place.getCity());
             streetLabel.setText(place.getStreet());
             houseLabel.setText(place.getHouse());
-            descriptionLabel.setText(place.getDescriptoin());
+            descriptionLabel.setText(String.valueOf(place.getDescriptoin()));
         } else {
             countryLabel.setText("");
             regionLabel.setText("");
@@ -126,4 +129,82 @@ public class RootController {
     public void setStage(Stage stage) {
         this.stage = stage;
     }
+
+    //создание нового списка
+    @FXML
+    private void handleNew() {
+        main.getPlaceData().clear();
+        main.setPlaceFilePath(null);
+    }
+
+    //открыть файл с адресами
+    @FXML
+    private void handleOpen() {
+        FileChooser fileChooser = new FileChooser();
+
+        // Задаём фильтр расширений
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(
+                "XML files (*.xml)", "*.xml");
+        fileChooser.getExtensionFilters().add(extFilter);
+
+        // Показываем диалог загрузки файла
+        File file = fileChooser.showOpenDialog(main.getPrimaryStage());
+
+        if (file != null) {
+            main.loadDataFromFile(file);
+        }
+    }
+
+    //сохранение данных в существующий xml файл
+    @FXML
+    private void handleSave() {
+        File personFile = main.getPlaceFilePath();
+        if (personFile != null) {
+            main.saveDataToFile(personFile);
+        } else {
+            handleSaveAs();
+        }
+    }
+
+    //сохранение в новый xml файл
+    @FXML
+    private void handleSaveAs() {
+        FileChooser fileChooser = new FileChooser();
+
+        // Задаём фильтр расширений
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(
+                "XML files (*.xml)", "*.xml");
+        fileChooser.getExtensionFilters().add(extFilter);
+
+        // Показываем диалог сохранения файла
+        File file = fileChooser.showSaveDialog(main.getPrimaryStage());
+
+        if (file != null) {
+            // Make sure it has the correct extension
+            if (!file.getPath().endsWith(".xml")) {
+                file = new File(file.getPath() + ".xml");
+            }
+            main.saveDataToFile(file);
+        }
+    }
+
+
+     //Открывает диалоговое окно about.
+    @FXML
+    private void handleAbout() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Address List");
+        alert.setHeaderText("About");
+        alert.setContentText("Created by Maria_L");
+
+        alert.showAndWait();
+    }
+
+
+     //Закрывает приложение.
+    @FXML
+    private void handleExit() {
+        System.exit(0);
+    }
+
 }

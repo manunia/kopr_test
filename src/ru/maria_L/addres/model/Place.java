@@ -10,7 +10,8 @@ public class Place {
     private final StringProperty city;
     private final StringProperty street;
     private final StringProperty house;
-    private final StringProperty descriptoin;
+    //private final StringProperty descriptoin;
+    private final Annotation descriptoin;
 
     public Place() {
         this(null,null);
@@ -24,7 +25,8 @@ public class Place {
         this.city =new SimpleStringProperty("some place");
         this.street = new SimpleStringProperty("some street");
         this.house = new SimpleStringProperty("number house");
-        this.descriptoin = new SimpleStringProperty("this is my favorite place.");
+        //this.descriptoin = new SimpleStringProperty("this is my favorite place.");
+        this.descriptoin = new Annotation("this is my favorite place.",this);
 
     }
 
@@ -89,14 +91,22 @@ public class Place {
     }
 
     public String getDescriptoin() {
-        return descriptoin.get();
+        return descriptoin.getDescriptoin();
     }
 
-    public StringProperty descriptoinProperty() {
-        return descriptoin;
+    public void setDescriptoin(String text) {
+        this.descriptoin.setDescriptoin(text);
     }
 
-    public void setDescriptoin(String descriptoin) {
-        this.descriptoin.set(descriptoin);
-    }
+    //    public String getDescriptoin() {
+//        return descriptoin.get();
+//    }
+//
+//    public StringProperty descriptoinProperty() {
+//        return descriptoin;
+//    }
+//
+//    public void setDescriptoin(String descriptoin) {
+//        this.descriptoin.set(descriptoin);
+//    }
 }

@@ -5,6 +5,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import ru.maria_L.addres.model.Annotation;
 import ru.maria_L.addres.model.Place;
 
 public class EditDialogController {
@@ -23,6 +24,7 @@ public class EditDialogController {
 
     private Stage editDialogStage;
     private Place place;
+    private Annotation description;
     private boolean okClicked = false;
 
     @FXML
@@ -40,7 +42,7 @@ public class EditDialogController {
         cityField.setText(place.getCity());
         streetField.setText(place.getStreet());
         houseField.setText(place.getHouse());
-        descriptionArea.setText(place.getDescriptoin());
+        descriptionArea.setText(String.valueOf(place.getDescriptoin()));
         descriptionArea.setWrapText(true);
     }
 
