@@ -207,7 +207,7 @@ public class RootController {
     private void handlePrint() {
         System.out.println("All systen printers:");
         System.out.println(Printer.getAllPrinters());
-        
+
         PrinterJob pJ = PrinterJob.createPrinterJob();
 
         if (pJ != null) {
