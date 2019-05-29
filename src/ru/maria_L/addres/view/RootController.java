@@ -1,6 +1,8 @@
 package ru.maria_L.addres.view;
 
 import javafx.fxml.FXML;
+import javafx.print.Printer;
+import javafx.print.PrinterJob;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -198,6 +200,22 @@ public class RootController {
         alert.setContentText("Created by Maria_L");
 
         alert.showAndWait();
+    }
+
+    //печать документа
+    @FXML
+    private void handlePrint() {
+        System.out.println("All systen printers:");
+        System.out.println(Printer.getAllPrinters());
+        
+        PrinterJob pJ = PrinterJob.createPrinterJob();
+
+        if (pJ != null) {
+            boolean success = pJ.showPrintDialog(this.stage);
+            if (success) {
+                pJ.endJob();
+            }
+        }
     }
 
 

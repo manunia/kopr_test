@@ -98,15 +98,4 @@ public class Place {
         this.descriptoin.setDescriptoin(text);
     }
 
-    //    public String getDescriptoin() {
-//        return descriptoin.get();
-//    }
-//
-//    public StringProperty descriptoinProperty() {
-//        return descriptoin;
-//    }
-//
-//    public void setDescriptoin(String descriptoin) {
-//        this.descriptoin.set(descriptoin);
-//    }
 }
